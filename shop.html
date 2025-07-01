@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Shop - FramesPerSomething</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Arial', sans-serif;
+      background-color: #111;
+      color: #f2f2f2;
+    }
+
+    nav {
+      background: #000;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    nav .logo {
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+
+    nav a {
+      color: #f2f2f2;
+      text-decoration: none;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    nav ul li a:hover {
+      opacity: 0.6;
+    }
+
+    header {
+      padding: 3rem 2rem 1rem;
+      text-align: center;
+    }
+
+    header h1 {
+      font-size: 2rem;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 2rem;
+      padding: 2rem;
+    }
+
+    .item {
+      background: #1a1a1a;
+      border: 1px solid #333;
+      border-radius: 8px;
+      transition: transform 0.2s ease;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .item:hover {
+      transform: translateY(-5px);
+    }
+
+    .item img {
+      width: 100%;
+      height: auto;
+      display: block;
+      cursor: pointer;
+    }
+
+    .item-content {
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .item-title {
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+
+    .item-caption {
+      font-size: 0.9rem;
+      color: #ccc;
+    }
+
+    .item-price {
+      font-weight: bold;
+      color: #0ff;
+      font-size: 1rem;
+    }
+
+    footer {
+      text-align: center;
+      font-size: 0.8rem;
+      padding: 2rem;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="logo"><a href="Indext.html">FramesPerSomething</a></div>
+    <ul>
+      <li><a href="Indext.html">Home</a></li>
+      <li><a href="Indext.html#drops">Drops</a></li>
+      <li><a href="Indext.html#about">About</a></li>
+      <li><a href="checkout.html">Checkout</a></li>
+      <li><a href="#">Shop</a></li>
+    </ul>
+  </nav>
+
+  <header>
+    <h1>What’s in Frame Now</h1>
+    <p>One-of-a-kind drops from the sleep-deprived digital ether.</p>
+  </header>
+
+  <section class="grid">
+    <div id="modal" class="d-none position-fixed top-0 start-0 w-100 h-100 bg-dark bg-opacity-75 d-flex justify-content-center align-items-center" style="z-index:1000;">
+      <div class="bg-secondary p-4 rounded" style="max-width:400px; width:90%;">
+        <h2>Add to Cart</h2>
+        <p><strong>Size:</strong> <span id="modal-size-display">M</span></p>
+        <input type="range" id="modal-size-slider" min="0" max="4" value="2" step="1" class="form-range" />
+        <br />
+        <label for="modal-qty" class="form-label"><strong>Quantity:</strong></label>
+        <input type="number" id="modal-qty" value="1" min="1" class="form-control" />
+        <br />
+        <div class="d-flex justify-content-between">
+          <button id="add-to-cart" class="btn btn-info fw-bold text-dark">Add to Cart</button>
+          <button id="close-modal" class="btn btn-link text-light">Cancel</button>
+        </div>
+      </div>
+    </div>
+
+    <!--  Product item -->
+    <div class="item">
+      <img src="shirt1.png" alt="Madoka shirt" />
+      <div class="item-content">
+        <div class="item-title">Madoka</div>
+        <div class="item-caption">UwU, Madoka</div>
+        <!--  Price  -->
+        <div class="item-price">$8</div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    &copy; 2025 FramesPerSomething. All frames subject to fade.
+  </footer>
+<!-- gay shit below -->
+  <script>
+    const sizes = ['XS', 'S', 'M', 'L', 'XL'];
+
+    function getCookie(name) {
+      const value = `; ${document.cookie}`;
+      const parts = value.split(`; ${name}=`);
+      if (parts.length === 2) return parts.pop().split(';').shift();
+    }
+
+    const modal = document.getElementById('modal');
+    const modalSizeSlider = document.getElementById('modal-size-slider');
+    const modalSizeDisplay = document.getElementById('modal-size-display');
+    const modalQty = document.getElementById('modal-qty');
+    const addToCartBtn = document.getElementById('add-to-cart');
+    const closeModalBtn = document.getElementById('close-modal');
+
+    const itemImg = document.querySelector('.item img');
+    itemImg.addEventListener('click', () => {
+      modal.classList.remove('d-none');
+      const saved = getCookie('selectedSize');
+      const index = sizes.indexOf(saved);
+      if (index !== -1) {
+        modalSizeSlider.value = index;
+        modalSizeDisplay.textContent = saved;
+      }
+    });
+
+    modalSizeSlider.addEventListener('input', e => {
+      modalSizeDisplay.textContent = sizes[e.target.value];
+    });
+
+    closeModalBtn.addEventListener('click', () => {
+      modal.classList.add('d-none');
+    });
+
+    addToCartBtn.addEventListener('click', () => {
+      const itemName = 'Madoka';
+      const size = sizes[modalSizeSlider.value];
+      const quantity = parseInt(modalQty.value);
+
+      let cart = [];
+      const existing = getCookie('cart');
+      if (existing) {
+        try {
+          cart = JSON.parse(existing);
+        } catch (e) {}
+      }
+
+      cart.push({ item: itemName, size, quantity });
+      document.cookie = `cart=${JSON.stringify(cart)}; path=/; max-age=604800`;
+      modal.classList.add('d-none');
+      alert(`Added ${quantity} x ${itemName} (${size}) to cart.`);
+    });
+  </script>
+</body>
+</html>

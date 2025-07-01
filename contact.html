@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">   
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact - FramesPerSomething</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Helvetica Neue', sans-serif;
+      background-color: #111;
+      color: #f2f2f2;
+    }
+
+    nav {
+      background: #000;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    nav .logo {
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    nav ul li a {
+      color: #f2f2f2;
+      text-decoration: none;
+      font-size: 0.95rem;
+    }
+
+    nav ul li a:hover {
+      opacity: 0.6;
+    }
+
+    header {
+      padding: 3rem 2rem 1rem;
+      text-align: center;
+    }
+
+    header h1 {
+      font-size: 2rem;
+    }
+
+    .contact-form {
+      max-width: 600px;
+      margin: 2rem auto;
+      padding: 2rem;
+      background-color: #1a1a1a;
+      border: 1px solid #333;
+      border-radius: 8px;
+    }
+
+    .contact-form label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-size: 0.95rem;
+    }
+
+    .contact-form input,
+    .contact-form textarea {
+      width: 100%;
+      padding: 0.75rem;
+      margin-bottom: 1rem;
+      border-radius: 4px;
+      border: none;
+      background-color: #2a2a2a;
+      color: #f2f2f2;
+    }
+
+    .contact-form input::placeholder,
+    .contact-form textarea::placeholder {
+      color: #888;
+    }
+
+    .contact-form button {
+      padding: 0.6rem 1.2rem;
+      background-color: #28a745;
+      color: white;
+      border-radius: 4px;
+      border: none;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .contact-form button:hover {
+      background-color: #218838;
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem 0;
+      background-color: #000;
+      color: #555;
+      font-size: 0.85rem;
+    }
+  </style>
+</head> 
+
+<body>
+  <nav>
+    <div class="logo"><a href="index.html" style="text-decoration: none; color: inherit;">FramesPerSomething</a></div>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="shop.html">Shop</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </nav>
+
+  <header>
+    <h1>Hit Us Up</h1>
+    <p style="color: #aaa;">Got questions? Frame ideas? Or just wanna vibe? Drop us a message.</p>
+  </header>
+
+  <div class="contact-form">
+    <form action="#" method="post">
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name" placeholder="Your name..." required>
+
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" placeholder="you@example.com" required>
+
+      <label for="message">Message:</label>
+      <textarea id="message" name="message" rows="5" placeholder="Type your message..." required></textarea>
+
+      <button type="submit">Send Message</button>
+    </form>
+  </div>
+
+  <footer>
+    &copy; 2025 FramesPerSomething. All frames subject to fade.
+  </footer>
+</body>
+</html>

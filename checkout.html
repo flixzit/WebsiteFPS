@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Checkout - FramesPerSomething</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Arial', sans-serif;
+      background-color: #111;
+      color: #f2f2f2;
+    }
+
+    nav {
+      background: #000;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    nav .logo {
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+
+    nav a {
+      color: #f2f2f2;
+      text-decoration: none;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    nav ul li a:hover {
+      opacity: 0.6;
+    }
+
+    header {
+      padding: 3rem 2rem 1rem;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 2rem;
+    }
+
+    .container {
+      padding: 2rem;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .item {
+      background: #1a1a1a;
+      border: 1px solid #333;
+      border-radius: 8px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .item strong {
+      display: block;
+      font-size: 1.1rem;
+    }
+
+    .summary {
+      margin-top: 2rem;
+      font-size: 1.1rem;
+    }
+
+    select, input[type="text"] {
+      width: 100%;
+      padding: 0.5rem;
+      margin: 1rem 0;
+      background: #222;
+      color: #fff;
+      border: 1px solid #444;
+      border-radius: 5px;
+    }
+
+    button {
+      background: #0ff;
+      color: #000;
+      font-weight: bold;
+      border: none;
+      padding: 0.8rem 1.2rem;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 1rem;
+    }
+
+    footer {
+      text-align: center;
+      font-size: 0.8rem;
+      padding: 2rem;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="logo"><a href="index.html">FramesPerSomething</a></div>
+    <ul>
+      <li><a href="index.html#home">Home</a></li>
+      <li><a href="index.html#drops">Drops</a></li>
+      <li><a href="index.html#about">About</a></li>
+      <li><a href="index.html#testimonials">Stories</a></li>
+      <li><a href="shop.html">Shop</a></li>
+    </ul>
+  </nav>
+
+  <header>
+    <h1>Checkout</h1>
+    <p>Almost there — just confirm your details and shipping.</p>
+  </header>
+
+  <div class="container" id="checkout-container">
+    <!-- Items will be inserted here -->
+  </div>
+
+  <footer>
+    &copy; 2025 FramesPerSomething. All rights reserved.
+  </footer>
+
+  <script>
+    function getCookie(name) {
+      const value = `; ${document.cookie}`;
+      const parts = value.split(`; ${name}=`);
+      if (parts.length === 2) return parts.pop().split(';').shift();
+    }
+
+    function formatPrice(num) {
+      return `$${num.toFixed(2)}`;
+    }
+
+    const container = document.getElementById('checkout-container');
+
+    let cart = [];
+    const raw = getCookie('cart');
+    if (raw) {
+      try {
+        cart = JSON.parse(raw);
+      } catch (e) {}
+    }
+
+    let subtotal = 0;
+
+    cart.forEach(item => {
+      const price = 35;
+      const itemTotal = item.quantity * price;
+      subtotal += itemTotal;
+
+      const div = document.createElement('div');
+      div.className = 'item';
+      div.innerHTML = `
+        <strong>${item.item}</strong>
+        Size: ${item.size}<br>
+        Quantity: ${item.quantity}<br>
+        Total: ${formatPrice(itemTotal)}
+      `;
+      container.appendChild(div);
+    });
+
+    const shippingOptions = document.createElement('div');
+    shippingOptions.className = 'summary';
+    shippingOptions.innerHTML = `
+      <label for="country">Country:</label>
+      <select id="country">
+        <option value="USA">USA</option>
+        <option value="International">Other</option>
+      </select>
+
+      <label for="state">State (if USA):</label>
+      <input type="text" id="state" placeholder="e.g. NY" />
+
+      <div id="shipping-cost">Shipping: $0.00</div>
+      <div id="total-cost">Total: ${formatPrice(subtotal)}</div>
+
+      <button onclick="finalizeOrder()">Place Order</button>
+    `;
+    container.appendChild(shippingOptions);
+
+    function updateTotals() {
+      const country = document.getElementById('country').value;
+      const state = document.getElementById('state').value.trim().toUpperCase();
+
+      let shipping = 0;
+      if (country !== 'USA') {
+        shipping = 50;
+      } else if (state !== 'NY') {
+        shipping = 20;
+      }
+
+      document.getElementById('shipping-cost').textContent = `Shipping: ${formatPrice(shipping)}`;
+      document.getElementById('total-cost').textContent = `Total: ${formatPrice(subtotal + shipping)}`;
+    }
+
+    document.getElementById('country').addEventListener('change', updateTotals);
+    document.getElementById('state').addEventListener('input', updateTotals);
+
+    function finalizeOrder() {
+      alert('Order placed! (fake checkout)');
+      document.cookie = 'cart=[]; path=/; max-age=0';
+      window.location.href = 'index.html';
+    }
+
+    updateTotals(); // initialize
+  </script>
+</body>
+</html>
