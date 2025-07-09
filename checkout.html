@@ -49,6 +49,12 @@
       font-size: 2rem;
     }
 
+    h2 {
+      font-size: 1.3rem;
+      margin-bottom: 0.5rem;
+      color: #0ff;
+    }
+
     .container {
       padding: 2rem;
       max-width: 800px;
@@ -129,29 +135,34 @@
 
   <script>
     function getCookie(name) {
-      const value = `; ${document.cookie}`;
-      const parts = value.split(`; ${name}=`);
-      if (parts.length === 2) return parts.pop().split(';').shift();
-    }
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  if (parts.length === 2) return parts.pop().split(';').shift();
+}
 
-    function formatPrice(num) {
-      return `$${num.toFixed(2)}`;
-    }
+function formatPrice(num) {
+  return `$${Number(num).toFixed(2)}`;
+}
 
-    const container = document.getElementById('checkout-container');
+const container = document.getElementById('checkout-container');
 
-    let cart = [];
-    const raw = getCookie('cart');
-    if (raw) {
-      try {
-        cart = JSON.parse(raw);
-      } catch (e) {}
-    }
+let cart = [];
+const raw = getCookie('cart');
+if (raw) {
+  try {
+    cart = JSON.parse(decodeURIComponent(raw));
+  } catch (e) {
+    console.error("Cart parse error:", e);
+  }
+}
 
-    let subtotal = 0;
+if (cart.length === 0) {
+  container.innerHTML = `<p style="text-align:center;">Your cart is empty. <a href="shop.html" style="color:#0ff;">Go back to the shop</a>.</p>`;
+} else {
+  let subtotal = 0;
 
-    cart.forEach(item => {
-    const itemTotal = item.quantity * item.price;
+  cart.forEach(item => {
+    const itemTotal = item.quantity * Number(item.price);
     subtotal += itemTotal;
 
     const div = document.createElement('div');
@@ -166,29 +177,70 @@
     container.appendChild(div);
   });
 
+  const summaryMap = {};
+  cart.forEach(item => {
+    const key = `${item.item} (${item.size})`;
+    if (!summaryMap[key]) summaryMap[key] = 0;
+    summaryMap[key] += item.quantity;
+  });
 
-    const shippingOptions = document.createElement('div');
-    shippingOptions.className = 'summary';
-    shippingOptions.innerHTML = `
-      <label for="country">Country:</label>
-      <select id="country">
-        <option value="USA">USA</option>
-        <option value="International">Other</option>
-      </select>
+  const summaryBox = document.createElement('div');
+  summaryBox.className = 'summary';
+  summaryBox.innerHTML = `<h2>Cart Summary</h2>`;
+  const ul = document.createElement('ul');
+  ul.style.paddingLeft = '1.2rem';
+  for (const [key, qty] of Object.entries(summaryMap)) {
+    const li = document.createElement('li');
+    li.textContent = `${qty} x ${key}`;
+    ul.appendChild(li);
+  }
+  summaryBox.appendChild(ul);
+  container.appendChild(summaryBox);
 
-      <label for="state">State (if USA):</label>
-      <input type="text" id="state" placeholder="e.g. NY" />
+  const shippingOptions = document.createElement('div');
+  shippingOptions.className = 'summary';
+  shippingOptions.innerHTML = `
+    <label for="country">Country:</label>
+    <select id="country">
+      <option value="USA">USA</option>
+      <option value="International">Other</option>
+    </select>
 
-      <div id="shipping-cost">Shipping: $0.00</div>
-      <div id="total-cost">Total: ${formatPrice(subtotal)}</div>
+    <label for="state">State (if USA):</label>
+    <input type="text" id="state" placeholder="e.g. NY" />
 
-      <button onclick="finalizeOrder()">Place Order</button>
-    `;
-    container.appendChild(shippingOptions);
+    <div id="shipping-cost">Shipping: $0.00</div>
+    <div id="total-cost">Total: ${formatPrice(subtotal)}</div>
 
-    function updateTotals() {
-      const country = document.getElementById('country').value;
-      const state = document.getElementById('state').value.trim().toUpperCase();
+    <button onclick="finalizeOrder()">Place Order</button>
+  `;
+  container.appendChild(shippingOptions);
+
+  function updateTotals() {
+    const country = document.getElementById('country').value;
+    const state = document.getElementById('state').value.trim().toUpperCase();
+
+    let shipping = 0;
+    if (country !== 'USA') {
+      shipping = 50;
+    } else if (state !== 'NY') {
+      shipping = 20;
+    }
+
+    document.getElementById('shipping-cost').textContent = `Shipping: ${formatPrice(shipping)}`;
+    document.getElementById('total-cost').textContent = `Total: ${formatPrice(subtotal + shipping)}`;
+  }
+
+  document.getElementById('country').addEventListener('change', updateTotals);
+  document.getElementById('state').addEventListener('input', updateTotals);
+
+  function finalizeOrder() {
+    alert("This is where you'd send the order to your backend or Discord webhook.");
+    // Optionally clear the cart:
+    // document.cookie = "cart=; path=/; max-age=0";
+  }
+}
+
 
       let shipping = 0;
       if (country !== 'USA') {
@@ -197,51 +249,33 @@
         shipping = 20;
       }
 
-      document.getElementById('shipping-cost').textContent = `Shipping: ${formatPrice(shipping)}`;
-      document.getElementById('total-cost').textContent = `Total: ${formatPrice(subtotal + shipping)}`;
-    }
+      const total = subtotal + shipping;
 
-    document.getElementById('country').addEventListener('change', updateTotals);
-    document.getElementById('state').addEventListener('input', updateTotals);
+      const webhookURL = 'https://discord.com/api/webhooks/1392476358701219970/m27quQDtqZnSxMS5LAoCwgMHpXXqbNmooTfBlcPPTFjlAxwRB4zsEI6vDCCUUhmd2pow';
+      const itemLines = cart.map(item =>
+        `• ${item.quantity} x ${item.item} (${item.size}) @ $${item.price} = $${(item.quantity * item.price).toFixed(2)}`
+      ).join('\n');
 
-function finalizeOrder() {
-  const country = document.getElementById('country').value;
-  const state = document.getElementById('state').value.trim().toUpperCase();
+      const payload = {
+        content: `🧾 **New Order**\n\n${itemLines}\n\n📦 Shipping: $${shipping.toFixed(2)}\n💰 Total: $${total.toFixed(2)}\n🌍 Country: ${country}${state ? `\n🏙️ State: ${state}` : ''}`
+      };
 
-  let shipping = 0;
-  if (country !== 'USA') {
-    shipping = 50;
-  } else if (state !== 'NY') {
-    shipping = 20;
-  }
-
-  const total = subtotal + shipping;
-
-  const webhookURL = 'https://discord.com/api/webhooks/1392476358701219970/m27quQDtqZnSxMS5LAoCwgMHpXXqbNmooTfBlcPPTFjlAxwRB4zsEI6vDCCUUhmd2pow';
-  const itemLines = cart.map(item => 
-    `• ${item.quantity} x ${item.item} (${item.size}) @ $${item.price} = $${(item.quantity * item.price).toFixed(2)}`
-  ).join('\n');
-
-  const payload = {
-    content: `🧾 **New Order**\n\n${itemLines}\n\n📦 Shipping: $${shipping.toFixed(2)}\n💰 Total: $${total.toFixed(2)}\n🌍 Country: ${country}${state ? `\n🏙️ State: ${state}` : ''}`
-  };
-
-  fetch(webhookURL, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload)
-  }).then(() => {
-    alert('Order placed!');
-    document.cookie = 'cart=[]; path=/; max-age=0';
-    window.location.href = 'index.html';
-  }).catch(err => {
-    console.error('Webhook Error:', err);
-    alert('Failed to send order.');
-  });
-}
+      fetch(webhookURL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      }).then(() => {
+        alert('Order placed!');
+        document.cookie = 'cart=[]; path=/; max-age=0';
+        window.location.href = 'index.html';
+      }).catch(err => {
+        console.error('Webhook Error:', err);
+        alert('Failed to send order.');
+      });
+    
 
 
-    updateTotals(); // initialize
+    updateTotals(); // Initialize shipping total
   </script>
 </body>
 </html>

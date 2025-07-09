@@ -111,9 +111,9 @@
 </head>
 <body>
   <nav>
-    <div class="logo"><a href="Indext.html">FramesPerSomething</a></div>
+    <div class="logo"><a href="index.html">FramesPerSomething</a></div>
     <ul>
-      <li><a href="Indext.html">Home</a></li>
+      <li><a href="index.html">Home</a></li>
       <li><a href="Indext.html#drops">Drops</a></li>
       <li><a href="Indext.html#about">About</a></li>
       <li><a href="checkout.html">Checkout</a></li>
@@ -198,18 +198,21 @@ addToCartBtn.addEventListener('click', () => {
   const itemName = 'Madoka';
   const size = sizes[modalSizeSlider.value];
   const quantity = parseInt(modalQty.value);
-  const price = 8; // Make sure this matches the displayed price
+  const price = 8;
 
   let cart = [];
   const existing = getCookie('cart');
   if (existing) {
     try {
-      cart = JSON.parse(existing);
-    } catch (e) {}
+      cart = JSON.parse(decodeURIComponent(existing));
+    } catch (e) {
+      console.error("Failed to parse cart:", e);
+    }
   }
 
   cart.push({ item: itemName, size, quantity, price });
-  document.cookie = `cart=${JSON.stringify(cart)}; path=/; max-age=604800`;
+  const cartString = encodeURIComponent(JSON.stringify(cart));
+  document.cookie = `cart=${cartString}; path=/; max-age=604800`;
   modal.classList.add('d-none');
   alert(`Added ${quantity} x ${itemName} (${size}) to cart.`);
 });
