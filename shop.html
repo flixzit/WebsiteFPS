@@ -194,24 +194,26 @@
       modal.classList.add('d-none');
     });
 
-    addToCartBtn.addEventListener('click', () => {
-      const itemName = 'Madoka';
-      const size = sizes[modalSizeSlider.value];
-      const quantity = parseInt(modalQty.value);
+addToCartBtn.addEventListener('click', () => {
+  const itemName = 'Madoka';
+  const size = sizes[modalSizeSlider.value];
+  const quantity = parseInt(modalQty.value);
+  const price = 8; // Make sure this matches the displayed price
 
-      let cart = [];
-      const existing = getCookie('cart');
-      if (existing) {
-        try {
-          cart = JSON.parse(existing);
-        } catch (e) {}
-      }
+  let cart = [];
+  const existing = getCookie('cart');
+  if (existing) {
+    try {
+      cart = JSON.parse(existing);
+    } catch (e) {}
+  }
 
-      cart.push({ item: itemName, size, quantity });
-      document.cookie = `cart=${JSON.stringify(cart)}; path=/; max-age=604800`;
-      modal.classList.add('d-none');
-      alert(`Added ${quantity} x ${itemName} (${size}) to cart.`);
-    });
+  cart.push({ item: itemName, size, quantity, price });
+  document.cookie = `cart=${JSON.stringify(cart)}; path=/; max-age=604800`;
+  modal.classList.add('d-none');
+  alert(`Added ${quantity} x ${itemName} (${size}) to cart.`);
+});
+
   </script>
 </body>
 </html>

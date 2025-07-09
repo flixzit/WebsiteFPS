@@ -151,20 +151,21 @@
     let subtotal = 0;
 
     cart.forEach(item => {
-      const price = 35;
-      const itemTotal = item.quantity * price;
-      subtotal += itemTotal;
+    const itemTotal = item.quantity * item.price;
+    subtotal += itemTotal;
 
-      const div = document.createElement('div');
-      div.className = 'item';
-      div.innerHTML = `
-        <strong>${item.item}</strong>
-        Size: ${item.size}<br>
-        Quantity: ${item.quantity}<br>
-        Total: ${formatPrice(itemTotal)}
-      `;
-      container.appendChild(div);
-    });
+    const div = document.createElement('div');
+    div.className = 'item';
+    div.innerHTML = `
+      <strong>${item.item}</strong>
+      Size: ${item.size}<br>
+      Quantity: ${item.quantity}<br>
+      Price: ${formatPrice(item.price)} each<br>
+      Total: ${formatPrice(itemTotal)}
+    `;
+    container.appendChild(div);
+  });
+
 
     const shippingOptions = document.createElement('div');
     shippingOptions.className = 'summary';
@@ -203,11 +204,42 @@
     document.getElementById('country').addEventListener('change', updateTotals);
     document.getElementById('state').addEventListener('input', updateTotals);
 
-    function finalizeOrder() {
-      alert('Order placed! (fake checkout)');
-      document.cookie = 'cart=[]; path=/; max-age=0';
-      window.location.href = 'index.html';
-    }
+function finalizeOrder() {
+  const country = document.getElementById('country').value;
+  const state = document.getElementById('state').value.trim().toUpperCase();
+
+  let shipping = 0;
+  if (country !== 'USA') {
+    shipping = 50;
+  } else if (state !== 'NY') {
+    shipping = 20;
+  }
+
+  const total = subtotal + shipping;
+
+  const webhookURL = 'https://discord.com/api/webhooks/1392476358701219970/m27quQDtqZnSxMS5LAoCwgMHpXXqbNmooTfBlcPPTFjlAxwRB4zsEI6vDCCUUhmd2pow';
+  const itemLines = cart.map(item => 
+    `• ${item.quantity} x ${item.item} (${item.size}) @ $${item.price} = $${(item.quantity * item.price).toFixed(2)}`
+  ).join('\n');
+
+  const payload = {
+    content: `🧾 **New Order**\n\n${itemLines}\n\n📦 Shipping: $${shipping.toFixed(2)}\n💰 Total: $${total.toFixed(2)}\n🌍 Country: ${country}${state ? `\n🏙️ State: ${state}` : ''}`
+  };
+
+  fetch(webhookURL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  }).then(() => {
+    alert('Order placed!');
+    document.cookie = 'cart=[]; path=/; max-age=0';
+    window.location.href = 'index.html';
+  }).catch(err => {
+    console.error('Webhook Error:', err);
+    alert('Failed to send order.');
+  });
+}
+
 
     updateTotals(); // initialize
   </script>
