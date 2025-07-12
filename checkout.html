@@ -329,7 +329,9 @@
     document.getElementById('order-form').addEventListener('submit', e => {
       e.preventDefault();
 
-      const name = e.target.name.value.trim();
+      const fname = e.target.Fname.value.trim();
+      const lname = e.target.Lname.value.trim();
+      const name = `${fname} ${lname}`;
       const email = e.target.email.value.trim();
       const phone = e.target.phone.value.trim();
       const address = e.target.address.value.trim();
