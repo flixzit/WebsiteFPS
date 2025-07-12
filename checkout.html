@@ -10,6 +10,7 @@
       font-family: 'Arial', sans-serif;
       background-color: #111;
       color: #f2f2f2;
+      display: flex;
     }
     nav {
       background: #000;
@@ -17,6 +18,10 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      width: 100%;
+      position: fixed;
+      top: 0;
+      z-index: 1000;
     }
     nav .logo {
       font-weight: bold;
@@ -35,8 +40,9 @@
       opacity: 0.6;
     }
     header {
-      padding: 3rem 2rem 1rem;
+      padding: 5rem 2rem 1rem;
       text-align: center;
+      width: 100%;
     }
     h1 {
       font-size: 2rem;
@@ -51,6 +57,7 @@
       background: #222;
       padding: 1.5rem;
       border-radius: 8px;
+      flex: 1;
     }
     .cart-item {
       display: flex;
@@ -114,6 +121,25 @@
     .error {
       color: #f33;
     }
+
+    /* Sidebar Styles */
+    .sidebar {
+      width: 220px;
+      background-color: #1a1a1a;
+      padding: 1rem;
+      position: sticky;
+      top: 4.5rem;
+      height: 100vh;
+    }
+    .sidebar h3 {
+      font-size: 1.1rem;
+      margin-bottom: 1rem;
+    }
+    .sidebar button {
+      width: 100%;
+      margin-top: 0.5rem;
+      font-size: 0.95rem;
+    }
   </style>
 </head>
 <body>
@@ -128,106 +154,101 @@
     </ul>
   </nav>
 
-  <header>
-    <h1>Checkout</h1>
-    <p>Review your order and complete your purchase.</p>
-  </header>
+  <div class="sidebar">
+    <h3>Cart Actions</h3>
+    <div id="sidebar-items"></div>
+    <button onclick="handleClearCart()">Clear Cart</button>
+  </div>
 
-  <main>
-    <div id="cart-items"></div>
-    <div id="shipping" class="total-line"></div>
-    <div id="total" class="total-line"></div>
+  <div style="flex: 1; padding-left: 1rem;">
+    <header>
+      <h1>Checkout</h1>
+      <p>Review your order and complete your purchase.</p>
+    </header>
 
-    <form id="order-form">
-      <label for="Fname">First Name*</label>
-      <input type="text" id="Fname" name="Fname" required />
+    <main>
+      <div id="cart-items"></div>
+      <div id="shipping" class="total-line"></div>
+      <div id="total" class="total-line"></div>
 
-      <label for="Lname">Last Name*</label>
-      <input type="text" id="Lname" name="Lname" required />
+      <form id="order-form">
+        <label for="Fname">First Name*</label>
+        <input type="text" id="Fname" name="Fname" required />
+        <label for="Lname">Last Name*</label>
+        <input type="text" id="Lname" name="Lname" required />
+        <label for="email">Email*</label>
+        <input type="email" id="email" name="email" required />
+        <label for="phone">Phone*</label>
+        <input type="tel" id="phone" name="phone" required />
+        <label for="address">Address*</label>
+        <input type="text" id="address" name="address" required />
+        <label for="zipcode">Zipcode*</label>
+        <input type="text" id="zipcode" name="zipcode" required />
+        <label for="state">State*</label>
+        <select id="state" name="state" required>
+          <option value="">Select a state</option>
+          <option value="AL">Alabama</option>
+          <option value="AK">Alaska</option>
+          <option value="AZ">Arizona</option>
+          <option value="AR">Arkansas</option>
+          <option value="CA">California</option>
+          <option value="CO">Colorado</option>
+          <option value="CT">Connecticut</option>
+          <option value="DE">Delaware</option>
+          <option value="FL">Florida</option>
+          <option value="GA">Georgia</option>
+          <option value="HI">Hawaii</option>
+          <option value="ID">Idaho</option>
+          <option value="IL">Illinois</option>
+          <option value="IN">Indiana</option>
+          <option value="IA">Iowa</option>
+          <option value="KS">Kansas</option>
+          <option value="KY">Kentucky</option>
+          <option value="LA">Louisiana</option>
+          <option value="ME">Maine</option>
+          <option value="MD">Maryland</option>
+          <option value="MA">Massachusetts</option>
+          <option value="MI">Michigan</option>
+          <option value="MN">Minnesota</option>
+          <option value="MS">Mississippi</option>
+          <option value="MO">Missouri</option>
+          <option value="MT">Montana</option>
+          <option value="NE">Nebraska</option>
+          <option value="NV">Nevada</option>
+          <option value="NH">New Hampshire</option>
+          <option value="NJ">New Jersey</option>
+          <option value="NM">New Mexico</option>
+          <option value="NY">New York</option>
+          <option value="NC">North Carolina</option>
+          <option value="ND">North Dakota</option>
+          <option value="OH">Ohio</option>
+          <option value="OK">Oklahoma</option>
+          <option value="OR">Oregon</option>
+          <option value="PA">Pennsylvania</option>
+          <option value="RI">Rhode Island</option>
+          <option value="SC">South Carolina</option>
+          <option value="SD">South Dakota</option>
+          <option value="TN">Tennessee</option>
+          <option value="TX">Texas</option>
+          <option value="UT">Utah</option>
+          <option value="VT">Vermont</option>
+          <option value="VA">Virginia</option>
+          <option value="WA">Washington</option>
+          <option value="WV">West Virginia</option>
+          <option value="WI">Wisconsin</option>
+          <option value="WY">Wyoming</option>
+        </select>
+        <button type="submit">Complete Purchase</button>
+      </form>
 
-      <label for="email">Email*</label>
-      <input type="email" id="email" name="email" required />
-
-      <label for="phone">Phone*</label>
-      <input type="tel" id="phone" name="phone" required />
-
-      <label for="address">Address*</label>
-      <input type="text" id="address" name="address" required />
-
-      <label for="zipcode">Zipcode*</label>
-      <input type="text" id="zipcode" name="zipcode" required />
-
-
-      
-      <label for="state">State*</label>
-<select id="state" name="state" required>
-  <option value="">Select a state</option>
-  <option value="AL">Alabama</option>
-  <option value="AK">Alaska</option>
-  <option value="AZ">Arizona</option>
-  <option value="AR">Arkansas</option>
-  <option value="CA">California</option>
-  <option value="CO">Colorado</option>
-  <option value="CT">Connecticut</option>
-  <option value="DE">Delaware</option>
-  <option value="FL">Florida</option>
-  <option value="GA">Georgia</option>
-  <option value="HI">Hawaii</option>
-  <option value="ID">Idaho</option>
-  <option value="IL">Illinois</option>
-  <option value="IN">Indiana</option>
-  <option value="IA">Iowa</option>
-  <option value="KS">Kansas</option>
-  <option value="KY">Kentucky</option>
-  <option value="LA">Louisiana</option>
-  <option value="ME">Maine</option>
-  <option value="MD">Maryland</option>
-  <option value="MA">Massachusetts</option>
-  <option value="MI">Michigan</option>
-  <option value="MN">Minnesota</option>
-  <option value="MS">Mississippi</option>
-  <option value="MO">Missouri</option>
-  <option value="MT">Montana</option>
-  <option value="NE">Nebraska</option>
-  <option value="NV">Nevada</option>
-  <option value="NH">New Hampshire</option>
-  <option value="NJ">New Jersey</option>
-  <option value="NM">New Mexico</option>
-  <option value="NY">New York</option>
-  <option value="NC">North Carolina</option>
-  <option value="ND">North Dakota</option>
-  <option value="OH">Ohio</option>
-  <option value="OK">Oklahoma</option>
-  <option value="OR">Oregon</option>
-  <option value="PA">Pennsylvania</option>
-  <option value="RI">Rhode Island</option>
-  <option value="SC">South Carolina</option>
-  <option value="SD">South Dakota</option>
-  <option value="TN">Tennessee</option>
-  <option value="TX">Texas</option>
-  <option value="UT">Utah</option>
-  <option value="VT">Vermont</option>
-  <option value="VA">Virginia</option>
-  <option value="WA">Washington</option>
-  <option value="WV">West Virginia</option>
-  <option value="WI">Wisconsin</option>
-  <option value="WY">Wyoming</option>
-  </select>
-
-      <button type="submit">Complete Purchase</button>
-    </form>
-
-
-
-    <div id="message" class="message"></div>
-  </main>
+      <div id="message" class="message"></div>
+    </main>
+  </div>
 
   <script>
-    // gayest shit ever made by me
     function getCookie(name) {
-      const value = `; ${document.cookie}`;
-      const parts = value.split(`; ${name}=`);
-      if (parts.length === 2) return parts.pop().split(';').shift();
+      const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+      return match ? match[2] : null;
     }
 
     function parseCart() {
@@ -240,10 +261,16 @@
       }
     }
 
+    function setCart(cart) {
+      document.cookie = 'cart=' + encodeURIComponent(JSON.stringify(cart)) + '; path=/';
+    }
+
     function displayCart() {
       const cart = parseCart();
       const container = document.getElementById('cart-items');
+      const sidebar = document.getElementById('sidebar-items');
       container.innerHTML = '';
+      sidebar.innerHTML = '';
 
       if (cart.length === 0) {
         container.textContent = 'Your cart is empty.';
@@ -272,7 +299,7 @@
 
         const priceDiv = document.createElement('div');
         const lineTotal = price * quantity;
-        priceDiv.textContent = `$${lineTotal.toFixed(2)}`;
+        priceDiv.textContent = '$' + lineTotal.toFixed(2);
         priceDiv.className = 'item-price';
 
         subtotal += lineTotal;
@@ -282,90 +309,30 @@
         div.appendChild(qtyDiv);
         div.appendChild(priceDiv);
         container.appendChild(div);
+
+        const btn = document.createElement('button');
+        btn.textContent = `Remove: ${item}`;
+        btn.onclick = () => {
+          cart.splice(i, 1);
+          setCart(cart);
+          displayCart();
+        };
+        sidebar.appendChild(btn);
       });
 
-      // Shipping rules: free shipping over $25, otherwise $5 (change or whatever)
       const shippingCost = subtotal > 25 ? 0 : 5;
-
-      document.getElementById('shipping').textContent = `Shipping: $${shippingCost.toFixed(2)}`;
-      document.getElementById('total').textContent = `Total: $${(subtotal + shippingCost).toFixed(2)}`;
+      document.getElementById('shipping').textContent = 'Shipping: $' + shippingCost.toFixed(2);
+      document.getElementById('total').textContent = 'Total: $' + (subtotal + shippingCost).toFixed(2);
 
       return { subtotal, shippingCost, total: subtotal + shippingCost };
     }
 
-    function clearCart() {
+    function handleClearCart() {
       document.cookie = 'cart=; path=/; max-age=0';
+      displayCart();
     }
 
-    function sendToDiscord(message) {
-      
-      const webhookURL = 'https://discord.com/api/webhooks/1392476358701219970/m27quQDtqZnSxMS5LAoCwgMHpXXqbNmooTfBlcPPTFjlAxwRB4zsEI6vDCCUUhmd2pow';
-
-      fetch(webhookURL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ content: message }),
-      })
-      .then(res => {
-        if (!res.ok) throw new Error('Failed to send to Discord');
-        return res.text();
-      })
-      .then(() => {
-        document.getElementById('message').textContent = 'Order sent! Thanks for buying.';
-        document.getElementById('message').classList.remove('error');
-        clearCart();
-        displayCart();
-        document.getElementById('order-form').reset();
-      })
-      .catch(() => {
-        document.getElementById('message').textContent = 'Failed to send order. Try again later.';
-        document.getElementById('message').classList.add('error');
-      });
-    }
-
-    // On load
     displayCart();
-
-    document.getElementById('order-form').addEventListener('submit', e => {
-      e.preventDefault();
-
-      const fname = e.target.Fname.value.trim();
-      const lname = e.target.Lname.value.trim();
-      const email = e.target.email.value.trim();
-      const phone = e.target.phone.value.trim();
-      const address = e.target.address.value.trim();
-      const zipcode = e.target.zipcode.value.trim(); 
-      const state = e.target.state.value.trim();
-
-      const fullName = `${fname} ${lname}`;
-
-      if (!fullName || !email || !phone || !address || !zipcode || !state) {
-        document.getElementById('message').textContent = 'Please fill in all required fields.';
-        document.getElementById('message').classList.add('error');
-        return;
-      }
-
-      const cart = parseCart();
-      if (cart.length === 0) {
-        document.getElementById('message').textContent = 'Your cart is empty.';
-        document.getElementById('message').classList.add('error');
-        return;
-      }
-
-      const { subtotal, shippingCost, total } = displayCart();
-
-      // Format order details (chatgpt style)
-      let orderDetails = ` **New Order from ${fullName}**\n`;
-      orderDetails += ` Email: ${email}\n Phone: ${phone}\n Address: ${address}, ${state} ${zipcode}\n\n`;
-      orderDetails += `**Items:**\n`;
-      cart.forEach(({ item, size, quantity, price }) => {
-        orderDetails += `• ${item} (Size: ${size}) x${quantity} = $${(price * quantity).toFixed(2)}\n`;
-      });
-      orderDetails += `\n Subtotal: $${subtotal.toFixed(2)}\n Shipping: $${shippingCost.toFixed(2)}\n Total: $${total.toFixed(2)}`;
-
-
-      sendToDiscord(orderDetails);
-    });
   </script>
 </body>
 </html>
