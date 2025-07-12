@@ -332,8 +332,11 @@
       const name = e.target.name.value.trim();
       const email = e.target.email.value.trim();
       const phone = e.target.phone.value.trim();
+      const address = e.target.address.value.trim();
+      const zipcode = e.target.zipcode.value.trim(); 
+      const state = e.target.state.value.trim();
 
-      if (!name || !email || !phone) {
+      if (!name || !email || !phone || !address || !zipcode || !state) {
         document.getElementById('message').textContent = 'Please fill in all required fields.';
         document.getElementById('message').classList.add('error');
         return;
