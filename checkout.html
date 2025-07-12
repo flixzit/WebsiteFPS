@@ -355,13 +355,13 @@
       const { subtotal, shippingCost, total } = displayCart();
 
       // Format order details (chatgpt style)
-      let orderDetails = `🛒 **New Order from ${fullName}**\n`;
-      orderDetails += `📧 Email: ${email}\n📞 Phone: ${phone}\n🏠 Address: ${address}, ${state} ${zipcode}\n\n`;
+      let orderDetails = ` **New Order from ${fullName}**\n`;
+      orderDetails += ` Email: ${email}\n Phone: ${phone}\n Address: ${address}, ${state} ${zipcode}\n\n`;
       orderDetails += `**Items:**\n`;
       cart.forEach(({ item, size, quantity, price }) => {
         orderDetails += `• ${item} (Size: ${size}) x${quantity} = $${(price * quantity).toFixed(2)}\n`;
       });
-      orderDetails += `\n💵 Subtotal: $${subtotal.toFixed(2)}\n🚚 Shipping: $${shippingCost.toFixed(2)}\n🧾 Total: $${total.toFixed(2)}`;
+      orderDetails += `\n Subtotal: $${subtotal.toFixed(2)}\n Shipping: $${shippingCost.toFixed(2)}\n Total: $${total.toFixed(2)}`;
 
 
       sendToDiscord(orderDetails);
