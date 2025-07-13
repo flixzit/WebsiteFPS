@@ -67,21 +67,6 @@
       transition: transform 0.2s ease;
     }
 
-    .logo:hover {
-      transform: scale(1.1);
-    }
-
-    .logo.clicked {
-      animation: pop 0.4s ease forwards;
-    }
-
-    @keyframes pop {
-      0% { transform: scale(1); }
-      30% { transform: scale(1.3); }
-      60% { transform: scale(0.9); }
-      100% { transform: scale(1); }
-    }
-
     .theme-toggle {
       font-size: 1rem;
       cursor: pointer;
@@ -183,38 +168,21 @@
       color: var(--accent);
     }
 
-    .bounce-img {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      width: 60px;
-      height: 60px;
-      z-index: 9999;
-      pointer-events: none;
-      animation: bounceAround 3s ease-in-out infinite;
-    }
-    @keyframes bounceAround {
-      0% { transform: translate(0, 0); }
-      25% { transform: translate(200px, -100px); }
-      50% { transform: translate(-150px, 200px); }
-      75% { transform: translate(100px, 100px); }
-      100% { transform: translate(0, 0); }
-    }
   </style>
 </head>
 <body data-theme="light">
   <nav class="navbar navbar-expand-lg">
     <div class="container-fluid">
-      <span class="logo">FramesperSecond</span>
+      <div class="logo"><a href="index.html">FramesPerSomething</a></div>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu" aria-controls="menu" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse justify-content-end" id="menu">
         <ul class="navbar-nav">
-          <li class="nav-item"><a class="nav-link" href="#home"><b>Home</b></a></li>
-          <li class="nav-item"><a class="nav-link" href="#drops"><b>Releases</b></a></li>
-          <li class="nav-item"><a class="nav-link" href="#about"><b>Info</b></a></li>
-          <li class="nav-item"><a class="nav-link" href="#testimonials"><b>Quotes</b></a></li>
+          <li class="nav-item"><a class="nav-link" href="index.html"><b>Home</b></a></li>
+          <li class="nav-item"><a class="nav-link" href="index.html#drops"><b>Releases</b></a></li>
+          <li class="nav-item"><a class="nav-link" href="index.html#about"><b>Info</b></a></li>
+          <li class="nav-item"><a class="nav-link" href="index.html#testimonials"><b>Quotes</b></a></li>
           <li class="nav-item"><a class="nav-link" href="shop.html"><b>Shop</b></a></li>
         </ul>
         <button class="theme-toggle" onclick="toggleTheme()">Toggle Mode</button>
@@ -223,65 +191,68 @@
   </nav>
 
   <header id="home">
-    <h1>welcome to framepersecond</h1>
-    <div class="intro">
-      <p>erm what the sigma on the shirt??? fr fr</p>
-    </div>
+    <h1>privacy policy</h1>
   </header>
+  <section id="privacy" class="section">
+  <h2>Privacy Policy</h2>
+  <p>Last updated: July 13, 2025</p>
 
-  <section id="drops" class="section">
-    <h2>🌸 Madoka Drop 🔥</h2>
-    <img src="shirt1.png" alt="Madoka Shirt Drop" />
-    <p>this shit the fire rn ngl... buy this for huzz</p>
-    <div class="cta">
-      <a href="#shop">view products</a>
-    </div>
-  </section>
+  <p>
+    This Privacy Policy explains how FramesperSecond collects, uses, and protects your personal information when you use our website. By accessing or using this site, you agree to the terms of this policy.
+  </p>
 
-  <section id="about" class="section">
-    <h2>about us</h2>
-    <p>framespersecond is your nostalgic shitfest. Shirts that are gonna make you go and want to do another line. This place is pretty skibity</p>
-  </section>
+  <h3>Information We Collect</h3>
+  <p>We may collect the following information when you interact with our website:</p>
+  <ul style="padding-left: 1.2rem;">
+    <li>Contact details, such as your name and email address (if submitted via forms)</li>
+    <li>Order and shipping information when you make a purchase</li>
+    <li>Technical data, such as your browser type, device, IP address, and browsing behavior (via cookies and analytics tools)</li>
+  </ul>
 
-  <section id="testimonials" class="section">
-    <blockquote>"Bro gave me 2 free carts with my order. I'm looking sick and i'm zooted" — A Totally Real Reviewer</blockquote>
-  </section>
+  <h3>How We Use Your Information</h3>
+  <p>We use the information we collect to:</p>
+  <ul style="padding-left: 1.2rem;">
+    <li>Process and deliver orders</li>
+    <li>Provide customer support</li>
+    <li>Understand how people use the site and improve it</li>
+    <li>Send updates or promotional content (only if you opt in)</li>
+  </ul>
 
-  <section id="shop" class="cta">
-    <a href="shop.html">Enter the Shop Portal</a>
-  </section>
+  <h3>Cookies</h3>
+  <p>
+    Our website uses cookies to remember your preferences, manage your shopping cart, and track usage for analytics. You can disable cookies in your browser settings if you prefer not to use them.
+  </p>
 
-  <section> 
-    <a href="Policy.html">Privacy Policy</a>
-  </section>
+  <h3>Third-Party Services</h3>
+  <p>
+    We may use trusted third-party tools like Google Analytics for website insights and Discord Webhooks to handle order notifications. These services may collect limited technical data to function properly.
+  </p>
+
+  <h3>Data Protection</h3>
+  <p>
+    We take reasonable steps to secure your personal information and prevent unauthorized access. Data is stored securely and only accessed when necessary to fulfill your order or provide support.
+  </p>
+
+  <h3>Your Rights</h3>
+  <p>
+    You have the right to request access to your personal data, ask us to delete it, or correct any errors. Just email us at <a href="mailto:framespersecond@skibity.biz">framespersecond@skibity.biz</a> and we’ll help you out.
+  </p>
+
+  <h3>Changes to This Policy</h3>
+  <p>
+    We may update this policy from time to time. Any changes will be posted on this page, and your continued use of the site means you accept the updated version.
+  </p>
+
+  <h3>Contact</h3>
+  <p>
+    If you have any questions or concerns about this policy, please contact us at <a href="mailto:framespersecond@skibity.biz">framespersecond@skibity.biz</a>.
+  </p>
+</section>
 
   <footer>
     &copy; 2025 FramesperSecond. All rights reserved.
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <script>
-    const logo = document.querySelector('.logo');
-
-    logo.addEventListener('click', () => {
-      logo.classList.add('clicked');
-      setTimeout(() => logo.classList.remove('clicked'), 400);
-
-      const img = document.createElement('img');
-      img.src = 'InternetExpl.png';
-      img.classList.add('bounce-img');
-      document.body.appendChild(img);
-
-      setTimeout(() => {
-        img.remove();
-      }, 3000);
-    });
-
-    function toggleTheme() {
-      const body = document.body;
-      const theme = body.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
-      body.setAttribute('data-theme', theme);
-    }
-  </script>
 </body>
 </html>

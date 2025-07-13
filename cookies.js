@@ -1,6 +1,6 @@
 /**
  * Cookie Settings Manager
- * Stores and retrieves user cookie preferences.
+ * Stores and retrieves cookies.
  */
 
 // Set cookie
@@ -19,19 +19,15 @@ function getCookie(name) {
         ?.split("=")[1];
 }
 
-// Save user cookie settings
+// Save user cookie settings (optional use)
 function saveCookieSettings(settings) {
     setCookie("cookie_settings", JSON.stringify(settings), 365);
 }
 
-// Load user cookie settings
+// Load user cookie settings (optional use)
 function loadCookieSettings() {
     const settings = getCookie("cookie_settings");
     return settings ? JSON.parse(decodeURIComponent(settings)) : null;
 }
-
-// Example usage:
-saveCookieSettings({ analytics: true, marketing: false });
-const userSettings = loadCookieSettings();
 
 export { setCookie, getCookie, saveCookieSettings, loadCookieSettings };
