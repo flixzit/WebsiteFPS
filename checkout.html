@@ -334,5 +334,74 @@
 
     displayCart();
   </script>
+
+  <script>
+  const webhookURL = "https://discord.com/api/webhooks/1392476358701219970/m27quQDtqZnSxMS5LAoCwgMHpXXqbNmooTfBlcPPTFjlAxwRB4zsEI6vDCCUUhmd2pow"; 
+
+  document.getElementById("order-form").addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const cart = parseCart();
+    if (cart.length === 0) {
+      document.getElementById("message").textContent = "Cart is empty.";
+      return;
+    }
+
+    const form = e.target;
+    const data = {
+      firstName: form.Fname.value,
+      lastName: form.Lname.value,
+      email: form.email.value,
+      phone: form.phone.value,
+      address: form.address.value,
+      zipcode: form.zipcode.value,
+      state: form.state.value,
+    };
+
+    let cartText = cart.map(({ item, size, quantity, price }) => {
+      return `**${item}** (Size: ${size}) x${quantity} - $${(price * quantity).toFixed(2)}`;
+    }).join("\n");
+
+    const total = displayCart(); // Already calculates total 1231
+    const message = {
+      content: `🛒 **New Order Received!**
+
+**Customer Info**
+Name: ${data.firstName} ${data.lastName}
+Email: ${data.email}
+Phone: ${data.phone}
+Address: ${data.address}, ${data.state} ${data.zipcode}
+
+**Items**
+${cartText}
+
+**Shipping**: $${total.shippingCost.toFixed(2)}
+**Total**: $${total.total.toFixed(2)}
+      `
+    };
+
+    try {
+      const res = await fetch(webhookURL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(message),
+      });
+
+      if (res.ok) {
+        document.getElementById("message").textContent = "Order sent successfully!";
+        handleClearCart();
+        form.reset();
+      } else {
+        document.getElementById("message").textContent = "Failed to send order. Try again.";
+      }
+    } catch (error) {
+      console.error("Error sending to Discord:", error);
+      document.getElementById("message").textContent = "Error occurred while sending order.";
+    }
+  });
+</script>
+
 </body>
 </html>
