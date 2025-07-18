@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Pay with PayPal - FramesPerSomething</title>
+  <style>
+    body {
+      background-color: #111;
+      color: #f2f2f2;
+      font-family: Arial, sans-serif;
+      padding: 2rem;
+    }
+    h1 {
+      color: #0ff;
+    }
+    a {
+      color: #0ff;
+    }
+    .important {
+      color: #0f0;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1>How to Pay via PayPal</h1>
+  <p>To avoid delays (like PayPal's 21-28 day hold) and unnecessary fees, follow these steps exactly: :> </p>
+
+  <ol>
+    <li><strong>Send money as "Friends and Family"</strong> — NOT "Goods and Services".</li>
+    <li>Enter this email when sending: <span class="important">framespersomething@gmail.com</span></li>
+    <li>In the note/message section, include the order code we gave you on the checkout page. Example:<br>
+      <code id="order-code">Loading...</code></li>
+  </ol>
+
+  <p>We need the order code to link your payment with your order!</p>
+
+  <p><a href="checkout.html">← Back to Checkout</a></p>
+
+  <script>
+    function getCookie(name) {
+      const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+      return match ? match[2] : null;
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const orderCode = getCookie('userCode');
+      const orderCodeEl = document.getElementById('order-code');
+      if (orderCode) {
+        orderCodeEl.textContent = `Order Code: ${orderCode}`;
+      } else {
+        orderCodeEl.textContent = 'No order code found. Please complete checkout first.';
+      }
+    });
+  </script>
+</body>
+</html>

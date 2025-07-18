@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Pay with Cash App - FramesPerSomething</title>
+  <style>
+    body { background-color: #111; color: #f2f2f2; font-family: Arial, sans-serif; padding: 2rem; }
+    h1 { color: #0ff; }
+    a { color: #0ff; }
+    .important { color: #0f0; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <h1>How to Pay via Cash App</h1>
+  <p>Follow these instructions to make sure your order is processed fast:</p>
+
+  <ol>
+    <li>Send payment to: <span class="important">$</span></li>
+    <li>In the payment message/note, include your order code exactly like this:<br>
+      <code id="order-code">Loading...</code></li>
+  </ol>
+
+  <p>We need the order code to link your payment with your order!</p>
+
+  <p><a href="checkout.html">← Back to Checkout</a></p>
+
+  <script>
+    function getCookie(name) {
+      const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+      return match ? match[2] : null;
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const orderCode = getCookie('userCode');
+      const orderCodeEl = document.getElementById('order-code');
+      if (orderCode) {
+        orderCodeEl.textContent = `Order Code: ${orderCode}`;
+      } else {
+        orderCodeEl.textContent = 'No order code found. Please complete checkout first.';
+      }
+    });
+  </script>
+</body>
+</html>
