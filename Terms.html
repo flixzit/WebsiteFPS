@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FramesperSomething</title>
+  <link rel="icon" href="Icon.ico" type="image/x-icon" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=Open+Sans:wght@400;700&display=swap" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #f0fff9;
+      --text: #003d33;
+      --accent: #00cc99;
+      --link: #00886f;
+      --nav-bg: #ffffffdd;
+      --card-bg: #ffffffdd;
+      --gradient: linear-gradient(135deg, #e0fdfa, #ccf0e8);
+    }
+
+    [data-theme="dark"] {
+      --bg: #0b1f1a;
+      --text: #dff8f0;
+      --accent: #33aa88;
+      --link: #66d1bc;
+      --nav-bg: #102e2add;
+      --card-bg: #1a3a34dd;
+      --gradient: linear-gradient(135deg, #004d40, #002f2a);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Open Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      transition: 0.3s, color 0.3s;
+    }
+
+    a {
+      color: var(--link);
+      text-decoration: none;
+    }
+
+    nav {
+      position: sticky;
+      top: 0;
+      background: var(--nav-bg);
+      backdrop-filter: blur(10px);
+      padding: 1rem 2rem;
+      z-index: 100;
+      border-bottom: 1px solid #ccc;
+    }
+
+    .logo {
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 700;
+      font-size: 1.6rem;
+      color: var(--accent);
+      text-shadow: 1px 1px 2px #888;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+
+    .theme-toggle {
+      font-size: 1rem;
+      cursor: pointer;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      padding: 0.4rem 0.7rem;
+      border-radius: 6px;
+      margin-left: 0.5rem;
+    }
+
+    header {
+      text-align: center;
+      padding: 5rem 2rem 3rem;
+      background: var(--gradient);
+    }
+
+    header h1 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 3.2rem;
+      color: var(--accent);
+      text-shadow: 2px 2px 5px #aaa;
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+    }
+
+    .section {
+      background: var(--card-bg);
+      border-radius: 12px;
+      padding: 3rem 2rem;
+      margin: 2rem;
+      box-shadow: 0 0 15px #aaffee33;
+      text-align: left;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+      white-space: pre-line; /* To preserve newlines from text */
+    }
+
+    .section h2 {
+      font-size: 1.6rem;
+      margin-bottom: 1rem;
+      color: var(--accent);
+      text-transform: uppercase;
+    }
+
+    .section p,
+    .section ul {
+      font-size: 1.05rem;
+      margin-bottom: 1rem;
+    }
+
+    .section ul {
+      padding-left: 1.2rem;
+    }
+
+    footer {
+      text-align: center;
+      font-size: 0.85rem;
+      padding: 2rem;
+      color: var(--accent);
+    }
+  </style>
+</head>
+<body data-theme="light">
+  <nav class="navbar navbar-expand-lg">
+    <div class="container-fluid">
+      <div class="logo"><a href="index.html">FramesPerSomething</a></div>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu" aria-controls="menu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end" id="menu">
+        <ul class="navbar-nav">
+          <li class="nav-item"><a class="nav-link" href="index.html"><b>Home</b></a></li>
+          <li class="nav-item"><a class="nav-link" href="index.html#drops"><b>Releases</b></a></li>
+          <li class="nav-item"><a class="nav-link" href="index.html#about"><b>Info</b></a></li>
+          <li class="nav-item"><a class="nav-link" href="index.html#testimonials"><b>Quotes</b></a></li>
+          <li class="nav-item"><a class="nav-link" href="shop.html"><b>Shop</b></a></li>
+        </ul>
+        <button class="theme-toggle" onclick="toggleTheme()">Toggle Mode</button>
+      </div>
+    </div>
+  </nav>
+
+  <header id="home">
+    <h1>Terms of Service</h1>
+  </header>
+  <section id="tos" class="section">
+    <p><strong>framespersomething – terms of service</strong></p>
+
+    <p>by shopping with us, you agree to the following terms:</p>
+
+    <h3>Orders & Payments</h3>
+    <p>all orders must be paid in full at checkout. we accept major credit/debit cards and other listed payment methods.</p>
+
+    <h3>Shipping</h3>
+    <p>shipping times vary by location. we are not responsible for delays caused by carriers.</p>
+
+    <h3>Returns & Exchanges</h3>
+    <p>we accept returns within 14 days of delivery for unworn items with tags. customers are responsible for return shipping unless the item is defective or incorrect. (refunds can ONLY be available by contacting framespersomething@outlook.com)</p>
+
+    <h3>Product Availability</h3>
+    <p>inventory may change without notice. if an item you ordered is out of stock, we’ll notify you and issue a refund.</p>
+
+    <h3>Use of Our Content</h3>
+    <p>some images, designs, and content on our site belong to framespersomething. you may not use them without permission. clothes may not be resold, unless the dtf is public domain, then you may buy the transfer and put it on the shirt yourself</p>
+
+    <h3>Tomfoolery</h3>
+    <p>any sort of tomfoolery is prohibited</p>
+
+    <h3>Policy Updates</h3>
+    <p>we may update our terms at any time. changes will be posted on this page with an updated date.</p>
+  </section>
+
+  <footer>
+    &copy; 2025 FramesperSomething. All rights reserved.
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    function toggleTheme() {
+      const body = document.body;
+      const currentTheme = body.getAttribute('data-theme');
+      body.setAttribute('data-theme', currentTheme === 'light' ? 'dark' : 'light');
+    }
+  </script>
+</body>
+</html>
